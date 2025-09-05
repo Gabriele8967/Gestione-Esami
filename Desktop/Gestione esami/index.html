@@ -211,6 +211,28 @@
                     </button>
                 </div>
             </div>
+
+            <div class="gdpr-section">
+                <h3><i class="fas fa-shield-alt"></i> Gestione Privacy e Dati</h3>
+                <p>In conformità al GDPR, puoi gestire i tuoi dati personali:</p>
+                <div class="gdpr-buttons">
+                    <button class="btn btn-info" onclick="showPrivacyPolicy()">
+                        <i class="fas fa-info-circle"></i>
+                        Informativa Privacy
+                    </button>
+                    <button class="btn btn-warning" onclick="exportAllData()">
+                        <i class="fas fa-download"></i>
+                        Scarica Tutti i Miei Dati
+                    </button>
+                    <button class="btn btn-danger" onclick="confirmDeleteAllData()">
+                        <i class="fas fa-trash-alt"></i>
+                        Elimina Tutti i Dati
+                    </button>
+                </div>
+                <div class="gdpr-info">
+                    <p><small><i class="fas fa-lock"></i> I tuoi dati sono salvati solo nel tuo browser e non vengono mai inviati a server esterni, eccetto per l'invio delle email di promemoria.</small></p>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -351,6 +373,147 @@
                         <button type="submit" class="btn btn-primary">Salva</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- GDPR Consent Banner -->
+    <div id="gdprBanner" class="gdpr-banner" style="display: none;">
+        <div class="gdpr-content">
+            <h4><i class="fas fa-shield-alt"></i> Privacy e Protezione Dati</h4>
+            <p>Questo sistema salva i dati dei pazienti solo nel tuo browser (LocalStorage). 
+            Nessun dato viene inviato a server esterni, eccetto per l'invio email di promemoria tramite Gmail sicuro.</p>
+            <div class="gdpr-actions">
+                <button class="btn btn-primary" onclick="acceptGDPR()">
+                    <i class="fas fa-check"></i> Accetto e Continua
+                </button>
+                <button class="btn btn-secondary" onclick="showPrivacyPolicy()">
+                    <i class="fas fa-info-circle"></i> Leggi Informativa
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-shield-alt"></i> Informativa Privacy - Centro Biofertility</h3>
+                <span class="close" onclick="closeModal('privacyModal')">&times;</span>
+            </div>
+            <div class="modal-body privacy-content">
+                <h4><i class="fas fa-target"></i> Finalità del Trattamento</h4>
+                <p>I dati personali vengono trattati esclusivamente per:</p>
+                <ul>
+                    <li>Gestione degli esami medici e controlli di routine</li>
+                    <li>Invio di promemoria automatici per esami in scadenza</li>
+                    <li>Monitoraggio del percorso di cura del paziente</li>
+                </ul>
+                
+                <h4><i class="fas fa-balance-scale"></i> Base Giuridica</h4>
+                <p><strong>Art. 6.1.a GDPR</strong> - Consenso dell'interessato<br>
+                <strong>Art. 9.2.h GDPR</strong> - Interesse legittimo per finalità di medicina preventiva e assistenza sanitaria</p>
+                
+                <h4><i class="fas fa-database"></i> Modalità di Conservazione</h4>
+                <div class="privacy-highlight">
+                    <p><strong>IMPORTANTE:</strong> I dati sono salvati esclusivamente nel browser locale (LocalStorage) del dispositivo utilizzato. 
+                    <strong>Nessun dato viene mai trasmesso o memorizzato su server esterni</strong>, eccetto per l'invio sicuro delle email di promemoria tramite Gmail.</p>
+                </div>
+                
+                <h4><i class="fas fa-clock"></i> Periodo di Conservazione</h4>
+                <p>I dati rimangono memorizzati fino a quando:</p>
+                <ul>
+                    <li>L'utente non li elimina manualmente</li>
+                    <li>La cache del browser non viene cancellata</li>
+                    <li>Il browser non viene disinstallato</li>
+                </ul>
+                
+                <h4><i class="fas fa-user-shield"></i> I Tuoi Diritti GDPR</h4>
+                <div class="rights-grid">
+                    <div class="right-item">
+                        <strong><i class="fas fa-eye"></i> Diritto di Accesso:</strong>
+                        <p>Puoi visualizzare tutti i tuoi dati nell'applicazione in qualsiasi momento</p>
+                    </div>
+                    <div class="right-item">
+                        <strong><i class="fas fa-edit"></i> Diritto di Rettifica:</strong>
+                        <p>Puoi modificare i dati tramite le funzioni di modifica integrate</p>
+                    </div>
+                    <div class="right-item">
+                        <strong><i class="fas fa-trash-alt"></i> Diritto alla Cancellazione:</strong>
+                        <p>Puoi eliminare tutti i dati con il pulsante "Elimina Tutti i Dati"</p>
+                    </div>
+                    <div class="right-item">
+                        <strong><i class="fas fa-download"></i> Diritto alla Portabilità:</strong>
+                        <p>Puoi esportare tutti i dati in formato Excel standard</p>
+                    </div>
+                </div>
+                
+                <h4><i class="fas fa-envelope"></i> Trattamento Email</h4>
+                <p>Per l'invio dei promemoria utilizziamo Gmail con le seguenti garanzie:</p>
+                <ul>
+                    <li>Connessione crittografata (HTTPS/TLS)</li>
+                    <li>Invio solo a email specificate dal paziente</li>
+                    <li>Nessuna memorizzazione permanente delle email inviate</li>
+                    <li>Possibilità di disattivare i promemoria in qualsiasi momento</li>
+                </ul>
+                
+                <h4><i class="fas fa-lock"></i> Misure di Sicurezza</h4>
+                <ul>
+                    <li><strong>Crittografia in transito:</strong> HTTPS su tutto il sito</li>
+                    <li><strong>Archiviazione locale:</strong> Nessun server centralizzato vulnerabile</li>
+                    <li><strong>Controllo totale:</strong> L'utente ha completo controllo sui propri dati</li>
+                    <li><strong>No accesso remoto:</strong> Impossibile accedere ai dati da remoto</li>
+                </ul>
+                
+                <h4><i class="fas fa-phone"></i> Contatti per Privacy</h4>
+                <div class="contact-info">
+                    <p><strong>Titolare del Trattamento:</strong> Centro Biofertility</p>
+                    <p><strong>Email:</strong> centrimanna2@gmail.com</p>
+                    <p><strong>Diritti:</strong> Per esercitare i tuoi diritti o per qualsiasi questione relativa alla privacy, contattaci all'email sopra indicata.</p>
+                </div>
+                
+                <div class="gdpr-footer">
+                    <p><small>Informativa aggiornata in conformità al Regolamento UE 2016/679 (GDPR) - Ultimo aggiornamento: Gennaio 2025</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Conferma Eliminazione Dati</h3>
+                <span class="close" onclick="closeModal('deleteConfirmModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="warning-box">
+                    <p><strong>⚠️ ATTENZIONE:</strong> Questa azione eliminerà <strong>TUTTI</strong> i dati salvati:</p>
+                    <ul>
+                        <li>Tutti i pazienti e le loro informazioni</li>
+                        <li>Tutti gli esami e le relative scadenze</li>
+                        <li>Tutte le configurazioni del sistema</li>
+                    </ul>
+                    <p><strong>Questa operazione NON può essere annullata!</strong></p>
+                </div>
+                
+                <div class="backup-reminder">
+                    <p><i class="fas fa-info-circle"></i> <strong>Consiglio:</strong> Prima di procedere, esporta i tuoi dati utilizzando il pulsante "Scarica Tutti i Miei Dati".</p>
+                </div>
+                
+                <div class="confirmation-input">
+                    <label>Per confermare, scrivi <strong>ELIMINA TUTTO</strong>:</label>
+                    <input type="text" id="deleteConfirmInput" placeholder="ELIMINA TUTTO">
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn btn-secondary" onclick="closeModal('deleteConfirmModal')">
+                        <i class="fas fa-times"></i> Annulla
+                    </button>
+                    <button class="btn btn-danger" onclick="executeDeleteAllData()">
+                        <i class="fas fa-trash-alt"></i> Elimina Definitivamente
+                    </button>
+                </div>
             </div>
         </div>
     </div>

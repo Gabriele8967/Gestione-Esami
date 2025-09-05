@@ -5,6 +5,7 @@ class ExamManagementApp {
         this.emailConfig = JSON.parse(localStorage.getItem('emailConfig') || '{}');
         this.currentEditingPatient = null;
         this.currentEditingExam = null;
+        this.gdprManager = new GDPRManager();
         
         this.init();
     }
@@ -19,6 +20,9 @@ class ExamManagementApp {
         
         // Auto-save ogni 30 secondi
         setInterval(() => this.saveData(), 30000);
+        
+        // Controlla consenso GDPR
+        this.gdprManager.checkConsent();
     }
 
     initEventListeners() {
@@ -879,6 +883,169 @@ class ExamManagementApp {
         };
         return colors[type] || '#2196f3';
     }
+
+    // GDPR Functions
+    exportAllData() {
+        const allData = {
+            pazienti: this.patients.map(p => ({
+                Nome: p.name,
+                Email: p.email,
+                Telefono: p.phone,
+                Partner: p.partner,
+                DataInizio: p.startDate,
+                Indirizzo: p.address,
+                Note: p.notes,
+                DataCreazione: p.createdAt
+            })),
+            esami: this.exams.map(e => {
+                const patient = this.patients.find(p => p.id === e.patientId);
+                return {
+                    Paziente: patient?.name || 'N/A',
+                    Esame: e.name,
+                    Tipo: e.type.toUpperCase(),
+                    DataPrescrizione: e.prescriptionDate,
+                    Scadenza: e.expiryDate,
+                    Stato: this.getStatusText(e.status),
+                    Note: e.notes,
+                    DataCreazione: e.createdAt
+                };
+            }),
+            configurazioni: {
+                EmailConfig: this.emailConfig,
+                DataEsportazione: new Date().toISOString()
+            }
+        };
+
+        const worksheet = XLSX.utils.json_to_sheet([
+            { Tipo: 'PAZIENTI', ...allData.pazienti[0] },
+            ...allData.pazienti.slice(1),
+            { Tipo: 'ESAMI' },
+            ...allData.esami,
+            { Tipo: 'CONFIGURAZIONI' },
+            allData.configurazioni
+        ]);
+        
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Tutti i Dati GDPR');
+        
+        const filename = `gestione_esami_backup_completo_${new Date().toISOString().split('T')[0]}.xlsx`;
+        XLSX.writeFile(workbook, filename);
+        
+        this.showNotification(`Backup completo scaricato: ${filename}`, 'success');
+        
+        // Log per GDPR
+        const logEntry = `[${new Date().toISOString()}] Esportazione dati completa richiesta dall'utente - File: ${filename}`;
+        localStorage.setItem('gdpr-export-log', 
+            (localStorage.getItem('gdpr-export-log') || '') + '\n' + logEntry
+        );
+    }
+}
+
+// GDPR Manager Class
+class GDPRManager {
+    constructor() {
+        this.consentKey = 'gdpr-consent-v1';
+        this.consentDate = 'gdpr-consent-date';
+    }
+
+    checkConsent() {
+        const consent = localStorage.getItem(this.consentKey);
+        const consentDate = localStorage.getItem(this.consentDate);
+        
+        // Verifica se consenso è valido (non più vecchio di 1 anno)
+        if (!consent || !consentDate) {
+            this.showGDPRBanner();
+            return false;
+        }
+        
+        const oneYearAgo = new Date();
+        oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+        
+        if (new Date(consentDate) < oneYearAgo) {
+            this.showGDPRBanner();
+            return false;
+        }
+        
+        return true;
+    }
+
+    showGDPRBanner() {
+        const banner = document.getElementById('gdprBanner');
+        if (banner) {
+            banner.style.display = 'block';
+            // Blocca scroll della pagina principale
+            document.body.style.paddingBottom = '200px';
+        }
+    }
+
+    acceptGDPR() {
+        const now = new Date().toISOString();
+        localStorage.setItem(this.consentKey, 'accepted');
+        localStorage.setItem(this.consentDate, now);
+        
+        const banner = document.getElementById('gdprBanner');
+        if (banner) {
+            banner.style.display = 'none';
+            document.body.style.paddingBottom = '0';
+        }
+        
+        // Log consenso
+        const logEntry = `[${now}] Consenso GDPR accettato dall'utente`;
+        localStorage.setItem('gdpr-consent-log', 
+            (localStorage.getItem('gdpr-consent-log') || '') + '\n' + logEntry
+        );
+        
+        app.showNotification('Consenso privacy accettato', 'success');
+    }
+
+    revokeConsent() {
+        // Rimuovi consenso
+        localStorage.removeItem(this.consentKey);
+        localStorage.removeItem(this.consentDate);
+        
+        // Log revoca
+        const logEntry = `[${new Date().toISOString()}] Consenso GDPR revocato dall'utente`;
+        localStorage.setItem('gdpr-consent-log', 
+            (localStorage.getItem('gdpr-consent-log') || '') + '\n' + logEntry
+        );
+        
+        // Elimina tutti i dati
+        this.deleteAllData();
+        
+        // Ricarica pagina
+        location.reload();
+    }
+
+    deleteAllData() {
+        // Lista completa di tutte le chiavi localStorage usate dall'app
+        const keysToDelete = [
+            'patients',
+            'exams', 
+            'emailConfig',
+            'gdpr-export-log',
+            'gdpr-consent-log',
+            'gdpr-consent-v1',
+            'gdpr-consent-date'
+        ];
+        
+        keysToDelete.forEach(key => {
+            localStorage.removeItem(key);
+        });
+        
+        // Log finale prima della cancellazione
+        console.log('[GDPR] Tutti i dati eliminati come richiesto dall\'utente');
+    }
+
+    getConsentInfo() {
+        const consent = localStorage.getItem(this.consentKey);
+        const consentDate = localStorage.getItem(this.consentDate);
+        
+        return {
+            hasConsent: !!consent,
+            consentDate: consentDate ? new Date(consentDate).toLocaleString('it-IT') : null,
+            isValid: this.checkConsent()
+        };
+    }
 }
 
 // Global functions per i click handlers
@@ -908,6 +1075,54 @@ function sendUpcomingReminders() {
 
 function exportToExcel(type) {
     app.exportToExcel(type);
+}
+
+// GDPR Global Functions
+function acceptGDPR() {
+    app.gdprManager.acceptGDPR();
+}
+
+function showPrivacyPolicy() {
+    app.showModal('privacyModal');
+}
+
+function exportAllData() {
+    app.exportAllData();
+}
+
+function confirmDeleteAllData() {
+    app.showModal('deleteConfirmModal');
+    document.getElementById('deleteConfirmInput').value = '';
+}
+
+function executeDeleteAllData() {
+    const confirmInput = document.getElementById('deleteConfirmInput').value;
+    
+    if (confirmInput !== 'ELIMINA TUTTO') {
+        app.showNotification('Testo di conferma non corretto', 'error');
+        return;
+    }
+    
+    // Chiede conferma finale
+    if (!confirm('ULTIMA CONFERMA: Eliminare definitivamente tutti i dati?\n\nQuesta azione NON può essere annullata!')) {
+        return;
+    }
+    
+    // Log finale
+    const finalLog = `[${new Date().toISOString()}] Eliminazione completa dati richiesta dall'utente - IP: ${navigator.userAgent}`;
+    console.log(finalLog);
+    
+    // Elimina tutto
+    app.gdprManager.deleteAllData();
+    
+    // Chiudi modal e notifica
+    app.closeModal('deleteConfirmModal');
+    app.showNotification('Tutti i dati sono stati eliminati definitivamente', 'success');
+    
+    // Ricarica dopo 2 secondi
+    setTimeout(() => {
+        location.reload();
+    }, 2000);
 }
 
 // CSS per le notifiche
