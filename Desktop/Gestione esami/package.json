@@ -1,0 +1,25 @@
+{
+  "name": "gestione-esami",
+  "version": "1.0.0",
+  "description": "Sistema gestione esami Centro Biofertility",
+  "main": "index.html",
+  "dependencies": {
+    "nodemailer": "^6.9.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "echo 'Static site - no build needed'",
+    "dev": "netlify dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "keywords": [
+    "gestione-esami",
+    "biofertility",
+    "netlify"
+  ],
+  "author": "Centro Biofertility",
+  "license": "MIT"
+}

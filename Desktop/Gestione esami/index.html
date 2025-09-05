@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Esami - Centro Biofertility</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-heartbeat"></i> Gestione Esami</h1>
+            <p>Centro Biofertility - Promemoria Esami</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-tabs">
+                <li class="tab active" data-tab="pazienti">
+                    <i class="fas fa-users"></i> Pazienti
+                </li>
+                <li class="tab" data-tab="esami">
+                    <i class="fas fa-calendar-check"></i> Esami
+                </li>
+                <li class="tab" data-tab="scadenze">
+                    <i class="fas fa-exclamation-triangle"></i> Scadenze
+                </li>
+                <li class="tab" data-tab="email">
+                    <i class="fas fa-envelope"></i> Email
+                </li>
+                <li class="tab" data-tab="import-export">
+                    <i class="fas fa-file-excel"></i> Import/Export
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Tab Pazienti -->
+        <div id="pazienti" class="tab-content active">
+            <div class="section-header">
+                <h2>Gestione Pazienti</h2>
+                <button class="btn btn-primary" onclick="showAddPatientModal()">
+                    <i class="fas fa-plus"></i> Aggiungi Paziente
+                </button>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchPatients" placeholder="Cerca paziente...">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="table-container">
+                <table id="patientsTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Paziente</th>
+                            <th>Email</th>
+                            <th>Telefono</th>
+                            <th>Partner</th>
+                            <th>Data Inizio</th>
+                            <th>Note</th>
+                            <th>Esami LEI</th>
+                            <th>Esami LUI</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Esami -->
+        <div id="esami" class="tab-content">
+            <div class="section-header">
+                <h2>Checklist Esami</h2>
+                <button class="btn btn-primary" onclick="showExamModal()">
+                    <i class="fas fa-plus"></i> Aggiungi Esame
+                </button>
+            </div>
+
+            <div class="exam-filters">
+                <select id="patientFilter">
+                    <option value="">Tutti i pazienti</option>
+                </select>
+                <select id="statusFilter">
+                    <option value="">Tutti gli stati</option>
+                    <option value="da_fare">Da fare</option>
+                    <option value="fatto">Fatto</option>
+                    <option value="scaduto">Scaduto</option>
+                </select>
+                <select id="typeFilter">
+                    <option value="">Tutti i tipi</option>
+                    <option value="lei">LEI</option>
+                    <option value="lui">LUI</option>
+                </select>
+            </div>
+
+            <div class="table-container">
+                <table id="examsTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Paziente</th>
+                            <th>Esame</th>
+                            <th>Tipo</th>
+                            <th>Data Prescrizione</th>
+                            <th>Scadenza</th>
+                            <th>Stato</th>
+                            <th>Note</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="examsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Scadenze -->
+        <div id="scadenze" class="tab-content">
+            <h2>Esami Scaduti e in Scadenza</h2>
+            
+            <div class="alerts-container">
+                <div class="alert-section">
+                    <h3 class="alert-title danger">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Esami Scaduti (<span id="overdueCount">0</span>)
+                    </h3>
+                    <div id="overdueExams" class="exam-list">
+                    </div>
+                </div>
+
+                <div class="alert-section">
+                    <h3 class="alert-title warning">
+                        <i class="fas fa-clock"></i>
+                        In Scadenza nei prossimi 7 giorni (<span id="upcomingCount">0</span>)
+                    </h3>
+                    <div id="upcomingExams" class="exam-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Email -->
+        <div id="email" class="tab-content">
+            <h2>Sistema Email Reminder</h2>
+            
+            <div class="email-config">
+                <h3>Sistema Email Automatico</h3>
+                <div class="email-info">
+                    <p><i class="fas fa-envelope"></i> <strong>Email configurata:</strong> centrimanna2@gmail.com</p>
+                    <p><i class="fas fa-server"></i> <strong>Sistema:</strong> Netlify Functions + Gmail</p>
+                    <p><i class="fas fa-check-circle"></i> <strong>Stato:</strong> <span style="color: green;">Attivo e pronto</span></p>
+                </div>
+                <div class="email-note">
+                    <p><i class="fas fa-info-circle"></i> Il sistema email è configurato automaticamente. 
+                    Le email vengono inviate da centrimanna2@gmail.com usando Netlify Functions.</p>
+                </div>
+            </div>
+
+            <div class="email-actions">
+                <h3>Invio Email</h3>
+                <button class="btn btn-warning" onclick="sendOverdueReminders()">
+                    <i class="fas fa-paper-plane"></i>
+                    Invia Reminder Esami Scaduti
+                </button>
+                <button class="btn btn-info" onclick="sendUpcomingReminders()">
+                    <i class="fas fa-paper-plane"></i>
+                    Invia Reminder Esami in Scadenza
+                </button>
+            </div>
+
+            <div id="emailLog" class="email-log">
+                <h3>Log Invii</h3>
+                <div id="emailLogContent"></div>
+            </div>
+        </div>
+
+        <!-- Tab Import/Export -->
+        <div id="import-export" class="tab-content">
+            <h2>Import/Export Dati</h2>
+            
+            <div class="import-section">
+                <h3>Importa Dati</h3>
+                <div class="file-upload">
+                    <input type="file" id="importFile" accept=".xlsx,.xls,.csv" style="display: none;">
+                    <button class="btn btn-success" onclick="document.getElementById('importFile').click()">
+                        <i class="fas fa-upload"></i>
+                        Importa da Excel
+                    </button>
+                </div>
+            </div>
+
+            <div class="export-section">
+                <h3>Esporta Dati</h3>
+                <div class="export-buttons">
+                    <button class="btn btn-primary" onclick="exportToExcel('patients')">
+                        <i class="fas fa-download"></i>
+                        Esporta Pazienti
+                    </button>
+                    <button class="btn btn-primary" onclick="exportToExcel('exams')">
+                        <i class="fas fa-download"></i>
+                        Esporta Esami
+                    </button>
+                    <button class="btn btn-primary" onclick="exportToExcel('complete')">
+                        <i class="fas fa-download"></i>
+                        Esporta Tutto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Aggiungi/Modifica Paziente -->
+    <div id="patientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="patientModalTitle">Aggiungi Paziente</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="patientForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome Paziente:</label>
+                            <input type="text" id="patientName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <input type="email" id="patientEmail" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Telefono:</label>
+                            <input type="tel" id="patientPhone">
+                        </div>
+                        <div class="form-group">
+                            <label>Partner:</label>
+                            <input type="text" id="patientPartner">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data Inizio:</label>
+                            <input type="date" id="patientStartDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Domicilio:</label>
+                            <input type="text" id="patientAddress">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Note:</label>
+                        <textarea id="patientNotes" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('patientModal')">Annulla</button>
+                        <button type="submit" class="btn btn-primary">Salva</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Aggiungi/Modifica Esame -->
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="examModalTitle">Aggiungi Esame</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="examForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Paziente:</label>
+                            <select id="examPatient" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo:</label>
+                            <select id="examType" required>
+                                <option value="">Seleziona tipo</option>
+                                <option value="lei">LEI</option>
+                                <option value="lui">LUI</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome Esame:</label>
+                            <select id="examName" required>
+                                <option value="">Seleziona esame</option>
+                                <optgroup label="Esami LEI">
+                                    <option value="HIV Ab">HIV Ab</option>
+                                    <option value="HCV Ab">HCV Ab</option>
+                                    <option value="CMV IgG">CMV IgG</option>
+                                    <option value="Cariotipo">Cariotipo</option>
+                                    <option value="Beta talassemia">Beta talassemia</option>
+                                    <option value="Fibrosi cistica">Fibrosi cistica</option>
+                                    <option value="Emocromo">Emocromo</option>
+                                    <option value="TSH">TSH</option>
+                                    <option value="AMH">AMH</option>
+                                    <option value="FSH">FSH</option>
+                                    <option value="LH">LH</option>
+                                    <option value="Estradiolo">Estradiolo</option>
+                                    <option value="Prolattina">Prolattina</option>
+                                    <option value="Progesterone">Progesterone</option>
+                                    <option value="Ecografia pelvica">Ecografia pelvica</option>
+                                    <option value="Isterosalpingografia">Isterosalpingografia</option>
+                                    <option value="Sonoisterografia">Sonoisterografia</option>
+                                </optgroup>
+                                <optgroup label="Esami LUI">
+                                    <option value="Spermiogramma">Spermiogramma</option>
+                                    <option value="Spermiocoltura">Spermiocoltura</option>
+                                    <option value="MAR test">MAR test</option>
+                                    <option value="Frammentazione DNA">Frammentazione DNA</option>
+                                    <option value="Cariotipo maschile">Cariotipo maschile</option>
+                                    <option value="Microdelezioni cromosoma Y">Microdelezioni cromosoma Y</option>
+                                    <option value="Dosaggio ormonale maschile">Dosaggio ormonale maschile</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Data Prescrizione:</label>
+                            <input type="date" id="examPrescriptionDate" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Validità (giorni):</label>
+                            <input type="number" id="examValidityDays" value="365" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Stato:</label>
+                            <select id="examStatus" required>
+                                <option value="da_fare">Da fare</option>
+                                <option value="fatto">Fatto</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Note:</label>
+                        <textarea id="examNotes" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('examModal')">Annulla</button>
+                        <button type="submit" class="btn btn-primary">Salva</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
