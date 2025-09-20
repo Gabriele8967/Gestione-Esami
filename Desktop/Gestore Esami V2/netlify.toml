@@ -1,0 +1,45 @@
+[build]
+  # Cartella con il codice frontend
+  base = "frontend/"
+  
+  # Comando di build
+  command = "npm install && npm run build"
+  
+  # Cartella di output per la pubblicazione
+  publish = "frontend/dist/"
+
+[build.environment]
+  # Versione Node.js
+  NODE_VERSION = "18"
+
+# Rewrite per SPA (Single Page Application)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers per sicurezza
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache per asset statici
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Headers per file JavaScript e CSS
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
