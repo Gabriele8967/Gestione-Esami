@@ -2,11 +2,11 @@
   # Cartella con il codice frontend
   base = "frontend/"
   
-  # Comando di build
-  command = "npm install && npm run build"
+  # Comando di build - usa il package.json nella cartella frontend
+  command = "npm ci && npm run build"
   
-  # Cartella di output per la pubblicazione
-  publish = "frontend/dist/"
+  # Cartella di output per la pubblicazione - relativo alla base
+  publish = "dist/"
 
 [build.environment]
   # Versione Node.js

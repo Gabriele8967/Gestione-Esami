@@ -2,12 +2,11 @@
   "name": "gestore-esami-v2",
   "version": "1.0.0",
   "description": "Sistema Gestione Esami Centro Biofertility",
+  "private": true,
   "scripts": {
-    "build": "cd frontend && npm ci && npx vite build --mode production && cd .. && mkdir -p dist && cp -r frontend/dist/* dist/",
-    "build:dev": "cd frontend && npm ci && npm run build && cd .. && mkdir -p dist && cp -r frontend/dist/* dist/",
+    "build": "echo 'Use netlify.toml configuration' && exit 1",
     "dev": "cd frontend && npm install && npm run dev",
-    "start": "cd frontend && npm run dev",
-    "postinstall": "cd frontend && npm install"
+    "start": "cd frontend && npm run dev"
   },
   "engines": {
     "node": ">=18.0.0",
