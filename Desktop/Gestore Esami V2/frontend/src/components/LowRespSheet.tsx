@@ -162,7 +162,7 @@ const LowRespSheet: React.FC = () => {
           onClick={addNewRow}
           title="Aggiungi nuova riga"
         >
-          <MdAdd /> Aggiungi Riga
+          <MdAdd size={16} /> Aggiungi Riga
         </button>
       </div>
 
@@ -170,7 +170,7 @@ const LowRespSheet: React.FC = () => {
         {/* Header Row */}
         <div className="excel-row excel-header-row" role="row">
           <div className="excel-cell row-number" role="columnheader" aria-label="Azioni">
-            <MdDragIndicator />
+            <MdDragIndicator size={16} />
           </div>
           {headers.map((header) => (
             <div 
@@ -184,7 +184,7 @@ const LowRespSheet: React.FC = () => {
               onDragOver={(e) => e.preventDefault()}
               style={{ width: header.width }}
             >
-              <MdDragIndicator className="drag-handle" />
+              <MdDragIndicator className="drag-handle" size={14} />
               {header.label}
             </div>
           ))}
@@ -205,21 +205,21 @@ const LowRespSheet: React.FC = () => {
             >
               <div className="excel-cell row-number" role="rowheader">
                 <div className="row-actions">
-                  <MdDragIndicator className="drag-handle" />
+                  <MdDragIndicator className="drag-handle" size={14} />
                   <span>{rowIndex + 1}</span>
                   <button 
                     className="action-btn checklist-btn"
                     onClick={() => setShowChecklist(row.id)}
                     title="Gestisci checklist"
                   >
-                    <MdChecklistRtl />
+                    <MdChecklistRtl size={14} />
                   </button>
                   <button 
                     className="action-btn delete-btn"
                     onClick={() => deleteRow(row.id)}
                     title="Elimina riga"
                   >
-                    <MdDelete />
+                    <MdDelete size={14} />
                   </button>
                 </div>
               </div>

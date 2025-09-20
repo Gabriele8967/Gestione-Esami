@@ -164,10 +164,10 @@ const ChecklistModal: React.FC<ChecklistModalProps> = ({
           <h2>Checklist Esami - {patientData?.paziente}</h2>
           <div className="modal-actions">
             <button className="btn-icon" onClick={printChecklist} title="Stampa checklist">
-              <MdPrint />
+              <MdPrint size={20} />
             </button>
             <button className="btn-icon" onClick={onClose} title="Chiudi">
-              <MdClose />
+              <MdClose size={20} />
             </button>
           </div>
         </div>
@@ -218,7 +218,7 @@ const ChecklistModal: React.FC<ChecklistModalProps> = ({
                 onKeyPress={(e) => e.key === 'Enter' && addCustomTask()}
               />
               <button onClick={addCustomTask} className="btn-add">
-                <MdAdd />
+                <MdAdd size={16} />
               </button>
             </div>
           </div>
@@ -255,7 +255,7 @@ const ChecklistModal: React.FC<ChecklistModalProps> = ({
                     className="checkbox"
                     onClick={() => toggleTask(item.id)}
                   >
-                    {item.completed ? <MdCheck /> : null}
+                    {item.completed ? <MdCheck size={14} /> : null}
                   </button>
                   <input
                     type="text"
@@ -269,7 +269,7 @@ const ChecklistModal: React.FC<ChecklistModalProps> = ({
                     onClick={() => deleteTask(item.id)}
                     title="Elimina task"
                   >
-                    <MdDelete />
+                    <MdDelete size={14} />
                   </button>
                 </div>
                 <div className="item-details">

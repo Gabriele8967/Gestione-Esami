@@ -3,17 +3,20 @@
   "version": "1.0.0",
   "description": "Sistema Gestione Esami Centro Biofertility",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
-    "dev": "cd frontend && npm run dev",
-    "start": "cd frontend && npm run dev"
+    "build": "cd frontend && npm ci && npx vite build --mode production && cd .. && mkdir -p dist && cp -r frontend/dist/* dist/",
+    "build:dev": "cd frontend && npm ci && npm run build && cd .. && mkdir -p dist && cp -r frontend/dist/* dist/",
+    "dev": "cd frontend && npm install && npm run dev",
+    "start": "cd frontend && npm run dev",
+    "postinstall": "cd frontend && npm install"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Gabriele8967/Gestione-Esami.git"
   },
   "author": "Centro Biofertility",
-  "license": "PRIVATE",
-  "workspaces": [
-    "frontend"
-  ]
+  "license": "PRIVATE"
 }
