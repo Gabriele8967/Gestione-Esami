@@ -9,8 +9,8 @@
   publish = "dist/"
 
 [build.environment]
-  # Versione Node.js
-  NODE_VERSION = "18"
+  # Versione Node.js - Match local development version
+  NODE_VERSION = "22"
 
 # Rewrite per SPA (Single Page Application)
 [[redirects]]
