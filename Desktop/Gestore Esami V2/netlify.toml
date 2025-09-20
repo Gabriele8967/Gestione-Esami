@@ -1,16 +1,13 @@
 [build]
-  # Cartella con il codice frontend
-  base = "frontend/"
+  # Build dal root del progetto
+  command = "cd frontend && npm ci && npm run build:production"
   
-  # Comando di build - usa il package.json nella cartella frontend
-  command = "npm ci && npm run build"
-  
-  # Cartella di output per la pubblicazione - relativo alla base
-  publish = "dist/"
+  # Cartella di output assoluta
+  publish = "frontend/dist"
 
 [build.environment]
-  # Versione Node.js - Match local development version
-  NODE_VERSION = "22"
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--legacy-peer-deps"
 
 # Rewrite per SPA (Single Page Application)
 [[redirects]]

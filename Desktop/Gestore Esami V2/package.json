@@ -4,7 +4,7 @@
   "description": "Sistema Gestione Esami Centro Biofertility",
   "private": true,
   "scripts": {
-    "build": "echo 'Use netlify.toml configuration' && exit 1",
+    "build": "cd frontend && npm ci && npm run build:production",
     "dev": "cd frontend && npm install && npm run dev",
     "start": "cd frontend && npm run dev"
   },
