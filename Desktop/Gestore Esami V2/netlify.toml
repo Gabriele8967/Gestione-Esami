@@ -1,9 +1,12 @@
 [build]
-  # Build dal root del progetto
+  # Build dal root del progetto - specifico per evitare override UI
   command = "cd frontend && npm ci && npm run build:production"
   
-  # Cartella di output assoluta
+  # Cartella di output relativa al root
   publish = "frontend/dist"
+  
+  # Base directory vuota per usare il root del repo
+  base = ""
 
 [build.environment]
   NODE_VERSION = "20"
