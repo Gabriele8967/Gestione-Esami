@@ -1,0 +1,955 @@
+/* Excel-like interface styling with improved accessibility */
+.excel-interface {
+  font-family: 'Inter', 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fafbfc;
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.excel-header {
+  background: linear-gradient(135deg, #0f6b3f 0%, #217346 100%);
+  color: white;
+  padding: 12px 20px;
+  font-weight: 600;
+  border-bottom: 2px solid #0f5a37;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.excel-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.sheet-tabs {
+  background: linear-gradient(to bottom, #ffffff 0%, #f5f6f7 100%);
+  border-bottom: 2px solid #e1e5e9;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.05);
+}
+
+.sheet-tab {
+  background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #c6cbd1;
+  border-bottom: none;
+  padding: 10px 16px;
+  margin-right: 3px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #495057;
+  transition: all 0.2s ease-in-out;
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  min-width: 120px;
+  text-align: center;
+}
+
+.sheet-tab:hover {
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+  color: #212529;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.sheet-tab.active {
+  background: linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
+  border-color: #0d6efd;
+  border-bottom: 2px solid white;
+  font-weight: 600;
+  color: #0d6efd;
+  z-index: 10;
+  box-shadow: 0 -2px 8px rgba(13, 110, 253, 0.15);
+}
+
+.sheet-tab:focus {
+  outline: 2px solid #0d6efd;
+  outline-offset: 2px;
+}
+
+.sheet-content {
+  background-color: white;
+  overflow: auto;
+  height: calc(100vh - 100px);
+  padding: 8px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+}
+
+/* Excel grid styling with improved accessibility */
+.excel-grid {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  font-size: 13px;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+}
+
+.excel-row {
+  display: table-row;
+}
+
+.excel-row:nth-child(even) {
+  background-color: #f8f9fb;
+}
+
+.excel-row:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.excel-cell {
+  display: table-cell;
+  border-right: 1px solid #e1e5e9;
+  border-bottom: 1px solid #e1e5e9;
+  padding: 8px 10px;
+  vertical-align: middle;
+  min-width: 100px;
+  max-width: 250px;
+  word-wrap: break-word;
+  position: relative;
+  transition: all 0.15s ease-in-out;
+}
+
+.excel-cell:hover {
+  background-color: #e8f4fd !important;
+  border-color: #4da6ff;
+  z-index: 5;
+}
+
+.excel-header-row {
+  background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.excel-header-row .excel-cell {
+  background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 2px solid #6c757d;
+  text-align: center;
+  font-weight: 700;
+  color: #212529;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 8px;
+}
+
+.row-number {
+  background: linear-gradient(to bottom, #f1f3f4 0%, #e9ecef 100%);
+  border-right: 2px solid #6c757d;
+  text-align: center;
+  font-weight: 700;
+  color: #6c757d;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  font-size: 11px;
+  position: sticky;
+  left: 0;
+  z-index: 15;
+}
+
+/* Special styling for ESAMI columns with improved accessibility */
+.esami-lui {
+  background: linear-gradient(135deg, #e8f4fd 0%, #dbeafe 100%) !important;
+  border-left: 4px solid #3b82f6;
+  position: relative;
+}
+
+.esami-lui::before {
+  content: "♂";
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  color: #1d4ed8;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.esami-lei {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%) !important;
+  border-left: 4px solid #ec4899;
+  position: relative;
+}
+
+.esami-lei::before {
+  content: "♀";
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  color: #be185d;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.esami-cell {
+  position: relative;
+}
+
+.esami-split {
+  display: flex;
+  height: 100%;
+}
+
+.esami-lui-half {
+  flex: 1;
+  background: linear-gradient(135deg, #e8f4fd 0%, #dbeafe 100%);
+  border-right: 2px solid #3b82f6;
+  padding: 4px 6px;
+  margin: -8px -10px -8px -10px;
+  padding-left: 10px;
+}
+
+.esami-lei-half {
+  flex: 1;
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+  padding: 4px 6px;
+  margin: -8px -10px -8px 0;
+  padding-right: 10px;
+}
+
+/* Form elements styling */
+.excel-cell input,
+.excel-cell textarea,
+.excel-cell select {
+  border: none;
+  width: 100%;
+  background: transparent;
+  font-size: 13px;
+  font-family: inherit;
+  color: #212529;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.excel-cell input:focus,
+.excel-cell textarea:focus,
+.excel-cell select:focus {
+  outline: 2px solid #0d6efd;
+  outline-offset: 1px;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+.excel-cell textarea {
+  resize: vertical;
+  min-height: 40px;
+  line-height: 1.4;
+}
+
+.excel-cell select {
+  cursor: pointer;
+  padding-right: 20px;
+}
+
+/* Button styling */
+.excel-cell button {
+  border: 1px solid #dee2e6;
+  background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+  cursor: pointer;
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #495057;
+  transition: all 0.2s ease-in-out;
+}
+
+.excel-cell button:hover {
+  background: linear-gradient(to bottom, #e9ecef 0%, #dee2e6 100%);
+  border-color: #adb5bd;
+  color: #212529;
+}
+
+.excel-cell button:focus {
+  outline: 2px solid #0d6efd;
+  outline-offset: 2px;
+}
+
+/* Accessibility improvements */
+.excel-interface {
+  scroll-behavior: smooth;
+}
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .excel-cell {
+    border-color: #000;
+  }
+  
+  .excel-header-row .excel-cell {
+    background: #000;
+    color: #fff;
+  }
+  
+  .esami-lui {
+    background: #0066cc !important;
+    color: #fff;
+  }
+  
+  .esami-lei {
+    background: #cc0066 !important;
+    color: #fff;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .excel-cell {
+    min-width: 80px;
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  
+  .sheet-tab {
+    font-size: 12px;
+    padding: 8px 12px;
+    min-width: 100px;
+  }
+  
+  .excel-title {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sheet-content {
+    padding: 4px;
+    height: calc(100vh - 120px);
+  }
+  
+  .excel-cell {
+    min-width: 70px;
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+  
+  .sheet-tab {
+    font-size: 11px;
+    padding: 6px 10px;
+    min-width: 80px;
+  }
+  
+  .excel-header {
+    padding: 8px 12px;
+  }
+  
+  .excel-title {
+    font-size: 13px;
+  }
+  
+  .row-number {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sheet-tabs {
+    flex-wrap: wrap;
+  }
+  
+  .sheet-tab {
+    margin-bottom: 2px;
+    flex: 1;
+    min-width: 60px;
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+  
+  .excel-cell {
+    min-width: 60px;
+    font-size: 10px;
+    padding: 3px 4px;
+  }
+  
+  .excel-grid {
+    font-size: 10px;
+  }
+}
+
+/* Custom scrollbars */
+.sheet-content::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+.sheet-content::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.sheet-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #dee2e6 0%, #adb5bd 100%);
+  border-radius: 8px;
+  border: 2px solid #f8f9fa;
+}
+
+.sheet-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #adb5bd 0%, #6c757d 100%);
+}
+
+.sheet-content::-webkit-scrollbar-corner {
+  background: #f8f9fa;
+}
+
+/* Loading state */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.loading::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #0d6efd;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Success/Error messages */
+.message {
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.message.success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+
+.message.info {
+  background-color: #d1ecf1;
+  color: #055160;
+  border: 1px solid #b6d4d9;
+}
+
+/* Enhanced table styling */
+.excel-cell.selected {
+  background-color: #fff3cd !important;
+  border: 2px solid #ffc107 !important;
+}
+
+.excel-cell.editing {
+  background-color: #f8f9fa !important;
+  box-shadow: inset 0 0 0 2px #0d6efd;
+}
+
+/* Status indicators */
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.status-indicator.completed {
+  background-color: #198754;
+}
+
+.status-indicator.pending {
+  background-color: #ffc107;
+}
+
+.status-indicator.error {
+  background-color: #dc3545;
+}
+
+/* Toolbar styles */
+.excel-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 1px solid #dee2e6;
+}
+
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toolbar-btn:hover {
+  background: linear-gradient(to bottom, #e9ecef 0%, #dee2e6 100%);
+  border-color: #adb5bd;
+}
+
+/* Drag & Drop styles */
+.draggable-header,
+.draggable-row {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.draggable-header:hover,
+.draggable-row:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.drag-handle {
+  color: #6c757d;
+  cursor: grab;
+  margin-right: 6px;
+}
+
+.drag-handle:hover {
+  color: #495057;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Row actions */
+.row-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: #6c757d;
+  transition: color 0.2s ease;
+}
+
+.action-btn:hover {
+  color: #495057;
+}
+
+.checklist-btn:hover {
+  color: #0d6efd;
+}
+
+.delete-btn:hover {
+  color: #dc3545;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.checklist-modal {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #dee2e6;
+  background: linear-gradient(135deg, #0f6b3f 0%, #217346 100%);
+  color: white;
+  border-radius: 8px 8px 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: white;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid #dee2e6;
+  background: #f8f9fa;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Checklist specific styles */
+.checklist-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-weight: 600;
+  color: #495057;
+  min-width: 100px;
+}
+
+.template-section,
+.custom-task-section,
+.filter-section {
+  margin-bottom: 20px;
+}
+
+.template-section h3,
+.custom-task-section h3,
+.filter-section h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #495057;
+}
+
+.template-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.template-btn {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 1px solid #90caf9;
+  border-radius: 6px;
+  color: #1565c0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+}
+
+.template-btn:hover {
+  background: linear-gradient(135deg, #bbdefb 0%, #90caf9 100%);
+  transform: translateY(-1px);
+}
+
+.custom-task-input {
+  display: flex;
+  gap: 8px;
+}
+
+.custom-task-input input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.btn-add {
+  padding: 8px 12px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-add:hover {
+  background: #218838;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.filter-buttons button {
+  padding: 6px 12px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.filter-buttons button:hover {
+  background: #e9ecef;
+}
+
+.filter-buttons button.active {
+  background: #0d6efd;
+  color: white;
+  border-color: #0d6efd;
+}
+
+.checklist-items {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.checklist-item {
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.checklist-item:hover {
+  border-color: #adb5bd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.checklist-item.completed {
+  background: #f8f9fa;
+  opacity: 0.7;
+}
+
+.item-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #dee2e6;
+  border-radius: 4px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkbox:hover {
+  border-color: #28a745;
+}
+
+.checklist-item.completed .checkbox {
+  background: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+.task-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  padding: 4px;
+}
+
+.task-input:focus {
+  outline: 1px solid #0d6efd;
+  border-radius: 4px;
+}
+
+.category-badge {
+  background: #e9ecef;
+  color: #6c757d;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.item-details {
+  display: flex;
+  gap: 8px;
+  padding-left: 28px;
+}
+
+.date-input,
+.notes-input {
+  padding: 4px 8px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.date-input {
+  width: 140px;
+}
+
+.notes-input {
+  flex: 1;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0b5ed7 0%, #0a58ca 100%);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+/* Print styles */
+@media print {
+  .sheet-tabs,
+  .excel-header,
+  .excel-toolbar {
+    display: none;
+  }
+  
+  .sheet-content {
+    height: auto;
+    overflow: visible;
+    padding: 0;
+  }
+  
+  .excel-grid {
+    border: 1px solid #000;
+    page-break-inside: avoid;
+  }
+  
+  .excel-cell {
+    border: 1px solid #000;
+    font-size: 10px;
+    padding: 2px;
+  }
+  
+  .excel-header-row {
+    background: #f0f0f0 !important;
+  }
+  
+  .esami-lui,
+  .esami-lei {
+    background: #f0f0f0 !important;
+  }
+  
+  .row-actions {
+    display: none;
+  }
+}
